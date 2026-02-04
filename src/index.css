@@ -2,87 +2,110 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Government Authority Palette */
+    --background: 220 20% 97%;
+    --foreground: 220 30% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 30% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 30% 12%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Deep Navy - Primary Authority Color */
+    --primary: 220 45% 18%;
+    --primary-foreground: 45 60% 95%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Slate Gray - Secondary */
+    --secondary: 220 15% 92%;
+    --secondary-foreground: 220 30% 20%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted tones */
+    --muted: 220 15% 94%;
+    --muted-foreground: 220 15% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Gold Accent - Official/Prestigious */
+    --accent: 42 85% 50%;
+    --accent-foreground: 220 45% 12%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* States */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Verified/Success - Teal */
+    --success: 168 60% 38%;
+    --success-foreground: 0 0% 100%;
+
+    /* Warning */
+    --warning: 38 92% 50%;
+    --warning-foreground: 220 30% 12%;
+
+    --border: 220 20% 88%;
+    --input: 220 20% 88%;
+    --ring: 220 45% 18%;
 
     --radius: 0.5rem;
 
+    /* Custom gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(220 45% 12%) 0%, hsl(220 35% 22%) 50%, hsl(220 45% 18%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(42 85% 50%) 0%, hsl(38 80% 45%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(220 20% 98%) 100%);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(220 30% 12% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(220 30% 12% / 0.1), 0 2px 4px -2px hsl(220 30% 12% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(220 30% 12% / 0.1), 0 4px 6px -4px hsl(220 30% 12% / 0.1);
+    --shadow-xl: 0 20px 25px -5px hsl(220 30% 12% / 0.1), 0 8px 10px -6px hsl(220 30% 12% / 0.1);
+    --shadow-gold: 0 4px 14px 0 hsl(42 85% 50% / 0.25);
+
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 220 30% 8%;
+    --foreground: 220 15% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 220 30% 12%;
+    --card-foreground: 220 15% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 30% 12%;
+    --popover-foreground: 220 15% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 42 85% 55%;
+    --primary-foreground: 220 45% 12%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 220 25% 18%;
+    --secondary-foreground: 220 15% 90%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 220 25% 15%;
+    --muted-foreground: 220 15% 60%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 42 85% 55%;
+    --accent-foreground: 220 45% 12%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --success: 168 55% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --border: 220 25% 20%;
+    --input: 220 25% 20%;
+    --ring: 42 85% 55%;
+
+    --gradient-hero: linear-gradient(135deg, hsl(220 30% 6%) 0%, hsl(220 25% 12%) 50%, hsl(220 30% 8%) 100%);
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -100,6 +123,97 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+}
+
+@layer components {
+  .font-display {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  .font-body {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .gradient-gold {
+    background: var(--gradient-gold);
+  }
+
+  .gradient-card {
+    background: var(--gradient-card);
+  }
+
+  .shadow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+
+  .text-gradient-gold {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Decorative shield pattern */
+  .shield-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L50 15 L50 35 C50 45 40 52 30 55 C20 52 10 45 10 35 L10 15 Z' fill='none' stroke='%23d4a017' stroke-opacity='0.08' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 60px 60px;
+  }
+
+  /* Blockchain connection lines */
+  .blockchain-grid {
+    background-image: 
+      linear-gradient(to right, hsl(220 45% 18% / 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(220 45% 18% / 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { 
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
