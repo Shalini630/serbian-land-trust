@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ShieldIcon, BlockchainIcon } from '@/components/icons/ShieldIcon';
-import { ArrowDown, CheckCircle2 } from 'lucide-react';
+import { ArrowDown, CheckCircle2, LayoutDashboard } from 'lucide-react';
 
 export const HeroSection: React.FC = () => {
   return (
@@ -50,11 +51,14 @@ export const HeroSection: React.FC = () => {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="hero" size="xl">
-                View Live Demo
-              </Button>
+              <Link to="/dashboard">
+                <Button variant="hero" size="xl" className="gap-2">
+                  <LayoutDashboard className="w-5 h-5" />
+                  Go to Dashboard
+                </Button>
+              </Link>
               <Button variant="heroOutline" size="xl">
-                Download Brief
+                View Live Demo
               </Button>
             </div>
           </div>
