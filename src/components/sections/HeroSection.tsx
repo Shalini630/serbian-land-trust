@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ShieldIcon, BlockchainIcon } from '@/components/icons/ShieldIcon';
-import { ArrowDown, CheckCircle2, LayoutDashboard } from 'lucide-react';
+import { ArrowDown, CheckCircle2, LayoutDashboard, Presentation } from 'lucide-react';
 
 export const HeroSection: React.FC = () => {
   return (
@@ -57,9 +57,12 @@ export const HeroSection: React.FC = () => {
                   Go to Dashboard
                 </Button>
               </Link>
-              <Button variant="heroOutline" size="xl">
-                View Live Demo
-              </Button>
+              <Link to="/login">
+                <Button variant="heroOutline" size="xl" className="gap-2">
+                  <Presentation className="w-5 h-5" />
+                  Presentations
+                </Button>
+              </Link>
             </div>
           </div>
 
