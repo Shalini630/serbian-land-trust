@@ -17,6 +17,12 @@ import DisputeDetail from "./pages/dashboard/DisputeDetail";
 import TransferDetail from "./pages/dashboard/TransferDetail";
 import MortgageDetail from "./pages/dashboard/MortgageDetail";
 import RegionDetail from "./pages/dashboard/RegionDetail";
+// Policy Dashboards
+import MinisterialDashboard from "./pages/policy/MinisterialDashboard";
+import AffordableHousingDashboard from "./pages/policy/AffordableHousingDashboard";
+import LegalComplianceDashboard from "./pages/policy/LegalComplianceDashboard";
+import SubsidyAllocationDashboard from "./pages/policy/SubsidyAllocationDashboard";
+import BubbleProtectionDashboard from "./pages/policy/BubbleProtectionDashboard";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +37,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
             <Route path="/presentations" element={<PresentationsPortal />} />
+            {/* Land Registry Dashboard */}
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/disputes" element={<DisputesDashboard />} />
             <Route path="/dashboard/disputes/:id" element={<DisputeDetail />} />
@@ -40,6 +47,12 @@ const App = () => (
             <Route path="/dashboard/mortgages/:id" element={<MortgageDetail />} />
             <Route path="/dashboard/regions" element={<RegionsDashboard />} />
             <Route path="/dashboard/regions/:id" element={<RegionDetail />} />
+            {/* Policy Dashboards */}
+            <Route path="/policy" element={<MinisterialDashboard />} />
+            <Route path="/policy/affordable-housing" element={<AffordableHousingDashboard />} />
+            <Route path="/policy/legal-compliance" element={<LegalComplianceDashboard />} />
+            <Route path="/policy/subsidy-allocation" element={<SubsidyAllocationDashboard />} />
+            <Route path="/policy/bubble-protection" element={<BubbleProtectionDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
