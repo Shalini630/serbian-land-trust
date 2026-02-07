@@ -1,10 +1,12 @@
- import React from 'react';
- import { Link, useNavigate } from 'react-router-dom';
- import { useAuth } from '@/contexts/AuthContext';
- import { Button } from '@/components/ui/button';
- import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
- import { Badge } from '@/components/ui/badge';
- import { ShieldIcon } from '@/components/icons/ShieldIcon';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { ShieldIcon } from '@/components/icons/ShieldIcon';
+import { DownloadablePresentationItem } from '@/components/presentations/DownloadablePresentationItem';
+import { DashboardPPTDownloadButton } from '@/components/presentations/DashboardPPTDownloadButton';
 import { 
   ArrowLeft, 
   LogOut, 
@@ -29,7 +31,7 @@ interface PresentationPhase {
   title: string;
   description: string;
   status: 'available' | 'locked';
-  items: { type: 'presentation' | 'dashboard' | 'document'; title: string; description: string; link?: string }[];
+  items: { type: 'presentation' | 'dashboard' | 'document'; title: string; description: string; link?: string; presentationKey?: string }[];
   requiredRole: ('admin' | 'government' | 'public')[];
 }
  
@@ -42,8 +44,8 @@ const presentations: PresentationPhase[] = [
     status: 'available',
     requiredRole: ['admin', 'government', 'public'],
     items: [
-      { type: 'presentation', title: 'Vision & Mission', description: 'Strategic overview of blockchain land registry' },
-      { type: 'presentation', title: 'Problem Statement', description: 'Current challenges in Serbian land registry' },
+      { type: 'presentation', title: 'Vision & Mission', description: 'Strategic overview of blockchain land registry', presentationKey: 'vision-mission' },
+      { type: 'presentation', title: 'Problem Statement', description: 'Current challenges in Serbian land registry', presentationKey: 'problem-statement' },
       { type: 'document', title: 'Executive Summary', description: 'One-page project brief for stakeholders' },
     ],
   },
@@ -55,14 +57,14 @@ const presentations: PresentationPhase[] = [
     status: 'available',
     requiredRole: ['admin', 'government'],
     items: [
-      { type: 'dashboard', title: 'Ministerial Command Center', description: 'Executive policy overview with 4 key indicators', link: '/policy' },
-      { type: 'dashboard', title: 'Affordable Housing Dashboard', description: 'HAI index, income vs price analysis, policy simulation', link: '/policy/affordable-housing' },
-      { type: 'dashboard', title: 'Legal Compliance Dashboard', description: 'Property verification, blockchain audit trail, risk flags', link: '/policy/legal-compliance' },
-      { type: 'dashboard', title: 'Subsidy Allocation Dashboard', description: 'Budget tracking, eligibility matrix, leakage detection', link: '/policy/subsidy-allocation' },
-      { type: 'dashboard', title: 'Bubble Protection Dashboard', description: 'Early warning indicators, AI forecasting, market stress', link: '/policy/bubble-protection' },
+      { type: 'dashboard', title: 'Ministerial Command Center', description: 'Executive policy overview with 4 key indicators', link: '/policy', presentationKey: 'ministerial-command' },
+      { type: 'dashboard', title: 'Affordable Housing Dashboard', description: 'HAI index, income vs price analysis, policy simulation', link: '/policy/affordable-housing', presentationKey: 'affordable-housing' },
+      { type: 'dashboard', title: 'Legal Compliance Dashboard', description: 'Property verification, blockchain audit trail, risk flags', link: '/policy/legal-compliance', presentationKey: 'legal-compliance' },
+      { type: 'dashboard', title: 'Subsidy Allocation Dashboard', description: 'Budget tracking, eligibility matrix, leakage detection', link: '/policy/subsidy-allocation', presentationKey: 'subsidy-allocation' },
+      { type: 'dashboard', title: 'Bubble Protection Dashboard', description: 'Early warning indicators, AI forecasting, market stress', link: '/policy/bubble-protection', presentationKey: 'bubble-protection' },
       { type: 'dashboard', title: 'Land Registry Dashboard', description: 'Real-time registry operations and regional data', link: '/dashboard' },
-      { type: 'presentation', title: 'Data Architecture', description: 'Data collection and processing pipeline' },
-      { type: 'presentation', title: 'Smart Contract Design', description: 'Blockchain transaction workflows' },
+      { type: 'presentation', title: 'Data Architecture', description: 'Data collection and processing pipeline', presentationKey: 'data-architecture' },
+      { type: 'presentation', title: 'Smart Contract Design', description: 'Blockchain transaction workflows', presentationKey: 'smart-contract' },
       { type: 'document', title: 'Technical Specification', description: 'Detailed system requirements' },
     ],
   },
@@ -213,58 +215,75 @@ const presentations: PresentationPhase[] = [
                  
                  <CardContent>
                    {hasAccess ? (
-                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                        {phase.items.map((item, index) => {
-                          const itemContent = (
-                            <div
-                              className="group p-4 rounded-lg bg-primary-foreground/5 border border-primary-foreground/10 hover:border-accent/30 hover:bg-primary-foreground/10 transition-all cursor-pointer h-full"
-                            >
-                              <div className="flex items-start justify-between mb-2">
-                                <div className={`w-8 h-8 rounded flex items-center justify-center ${
-                                  item.type === 'dashboard' ? 'bg-success/20 text-success' :
-                                  item.type === 'presentation' ? 'bg-accent/20 text-accent' :
-                                  'bg-muted/20 text-muted-foreground'
-                                }`}>
-                                  {getItemIcon(item.type)}
-                                </div>
-                                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                  {item.type === 'presentation' && (
-                                    <Button variant="ghost" size="icon" className="w-7 h-7 text-primary-foreground/50 hover:text-accent">
-                                      <Play className="w-3.5 h-3.5" />
-                                    </Button>
-                                  )}
-                                  {item.type === 'dashboard' && (
-                                    <Button variant="ghost" size="icon" className="w-7 h-7 text-primary-foreground/50 hover:text-success">
-                                      <Eye className="w-3.5 h-3.5" />
-                                    </Button>
-                                  )}
-                                  {item.type === 'document' && (
-                                    <Button variant="ghost" size="icon" className="w-7 h-7 text-primary-foreground/50 hover:text-primary-foreground">
-                                      <Download className="w-3.5 h-3.5" />
-                                    </Button>
-                                  )}
-                                </div>
-                              </div>
-                              <h4 className="text-sm font-medium text-primary-foreground font-body mb-1">
-                                {item.title}
-                              </h4>
-                              <p className="text-xs text-primary-foreground/50 font-body">
-                                {item.description}
-                              </p>
-                            </div>
-                          );
+                       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                         {phase.items.map((item, index) => {
+                           // Use downloadable presentation component for presentations with keys
+                           if (item.type === 'presentation' && item.presentationKey) {
+                             return (
+                               <DownloadablePresentationItem
+                                 key={index}
+                                 title={item.title}
+                                 description={item.description}
+                                 presentationKey={item.presentationKey}
+                               />
+                             );
+                           }
 
-                          if (item.link) {
-                            return (
-                              <Link key={index} to={item.link}>
-                                {itemContent}
-                              </Link>
-                            );
-                          }
+                           const itemContent = (
+                             <div
+                               className="group p-4 rounded-lg bg-primary-foreground/5 border border-primary-foreground/10 hover:border-accent/30 hover:bg-primary-foreground/10 transition-all cursor-pointer h-full"
+                             >
+                               <div className="flex items-start justify-between mb-2">
+                                 <div className={`w-8 h-8 rounded flex items-center justify-center ${
+                                   item.type === 'dashboard' ? 'bg-success/20 text-success' :
+                                   item.type === 'presentation' ? 'bg-accent/20 text-accent' :
+                                   'bg-muted/20 text-muted-foreground'
+                                 }`}>
+                                   {getItemIcon(item.type)}
+                                 </div>
+                                 <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                   {item.type === 'dashboard' && (
+                                     <>
+                                       <Button variant="ghost" size="icon" className="w-7 h-7 text-primary-foreground/50 hover:text-success">
+                                         <Eye className="w-3.5 h-3.5" />
+                                       </Button>
+                                       {item.presentationKey && (
+                                         <DashboardPPTDownloadButton presentationKey={item.presentationKey} variant="icon" />
+                                       )}
+                                     </>
+                                   )}
+                                   {item.type === 'document' && (
+                                     <Button variant="ghost" size="icon" className="w-7 h-7 text-primary-foreground/50 hover:text-primary-foreground">
+                                       <Download className="w-3.5 h-3.5" />
+                                     </Button>
+                                   )}
+                                 </div>
+                               </div>
+                               <h4 className="text-sm font-medium text-primary-foreground font-body mb-1">
+                                 {item.title}
+                               </h4>
+                               <p className="text-xs text-primary-foreground/50 font-body">
+                                 {item.description}
+                               </p>
+                               {item.type === 'dashboard' && item.presentationKey && (
+                                 <div className="mt-2 pt-2 border-t border-primary-foreground/10">
+                                   <DashboardPPTDownloadButton presentationKey={item.presentationKey} variant="full" />
+                                 </div>
+                               )}
+                             </div>
+                           );
 
-                          return <div key={index}>{itemContent}</div>;
-                        })}
-                     </div>
+                           if (item.link) {
+                             return (
+                               <Link key={index} to={item.link}>
+                                 {itemContent}
+                               </Link>
+                             );
+                           }
+
+                           return <div key={index}>{itemContent}</div>;
+                         })}
+                      </div>
                    ) : (
                      <div className="flex items-center justify-center py-8 text-primary-foreground/40">
                        <Lock className="w-5 h-5 mr-2" />
