@@ -5,20 +5,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from '@/components/ui/chart';
-import {
   BarChart,
   Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   ResponsiveContainer,
-  Cell,
-  PieChart,
-  Pie,
+  Tooltip,
   Legend,
 } from 'recharts';
 import {
@@ -156,7 +149,7 @@ const SubsidyAllocationDashboard: React.FC = () => {
                     <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                     <XAxis dataKey="name" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11 }} />
                     <YAxis tick={{ fill: 'hsl(var(--muted-foreground))' }} />
-                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <Tooltip />
                     <Bar dataKey="allocated" name="Allocated" fill="hsl(220, 70%, 50%)" radius={[4, 4, 0, 0]} />
                     <Bar dataKey="utilized" name="Utilized" fill="hsl(168, 60%, 38%)" radius={[4, 4, 0, 0]} />
                     <Legend />
@@ -179,7 +172,7 @@ const SubsidyAllocationDashboard: React.FC = () => {
                     <CartesianGrid strokeDasharray="3 3" className="stroke-muted" horizontal={false} />
                     <XAxis type="number" tick={{ fill: 'hsl(var(--muted-foreground))' }} />
                     <YAxis dataKey="name" type="category" tick={{ fill: 'hsl(var(--muted-foreground))' }} width={80} />
-                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <Tooltip />
                     <Bar dataKey="budget" name="Budget" fill="hsl(220, 70%, 50%)" radius={[0, 4, 4, 0]} />
                     <Bar dataKey="utilized" name="Utilized" fill="hsl(168, 60%, 38%)" radius={[0, 4, 4, 0]} />
                     <Legend />
