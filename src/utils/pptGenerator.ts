@@ -816,6 +816,200 @@ export const generateBubbleProtectionPPT = async () => {
   await pptx.writeFile({ fileName: 'Bubble_Protection_Deep_Dive.pptx' });
 };
 
+// ==================== 6. PROBLEM-SOLUTION-IMPLEMENTATION PPT ====================
+
+export const generateProblemSolutionPPT = async () => {
+  const pptx = new pptxgen();
+  pptx.title = 'Problem → Solution → Implementation';
+  pptx.author = 'National Digital Land Registry';
+
+  createTitleSlide(pptx, 'National Digital Land Registry', 'Problem → Solution → Implementation Roadmap', 'Comprehensive strategic brief for decision-makers');
+
+  // SECTION 1: THE PROBLEM
+  createSectionDivider(pptx, 'What Is the Problem?', '01');
+
+  createBulletSlide(pptx, 'The Core Problem', [
+    'Serbia\'s land registry system is paper-based, fragmented across 174 municipalities, and vulnerable to fraud',
+    'No single source of truth for property ownership — records scattered across courts, cadastre, municipalities, and banks',
+    'Property disputes affect 15% of parcels — unclear ownership deters investment and destabilizes markets',
+    'Citizens must visit 4-6 offices and wait 30+ days for a simple property transfer',
+    'Subsidy programs leak 8-12% due to inability to cross-verify eligibility across disconnected systems',
+    'No real-time visibility into market bubbles or speculative activity — regulators react months late',
+  ], 'Why the current system is failing Serbia');
+
+  createKPISlide(pptx, 'Problem in Numbers', [
+    { name: 'Registration Time', value: '30+ days', description: 'Average time for a property transfer. Citizens must visit cadastre, court, tax office, notary, and municipality. Each step is manual with no digital handoff.' },
+    { name: 'Properties with Disputes', value: '15%', description: 'Approximately 367,500 of 2,450,000 registered parcels have some form of ownership ambiguity, boundary conflict, or pending litigation.' },
+    { name: 'Subsidy Leakage', value: '8-12%', description: 'Estimated €10-15M annually in misallocated housing subsidies due to inability to verify income, ownership status, and prior benefits.' },
+    { name: 'Fraud Vulnerability', value: 'High', description: 'Paper records can be altered, lost, or destroyed. No cryptographic verification of document authenticity. No audit trail for changes.' },
+  ]);
+
+  // SECTION 2: HOW IS IT CURRENTLY BEING SOLVED?
+  createSectionDivider(pptx, 'How Is It Currently Being Solved?', '02');
+
+  createBulletSlide(pptx, 'Current Approach & Its Limitations', [
+    'Paper-Based Cadastre: Physical records stored in municipal offices — vulnerable to fire, flood, theft, and manipulation',
+    'Manual Verification: Each transfer requires physical visits to 4-6 government offices for stamps and signatures',
+    'Siloed Databases: Courts, banks, municipalities maintain separate systems with no interoperability',
+    'Partial Digitization: Some cities scanned records but without data standardization or cross-linking',
+    'No Fraud Detection: Duplicate registrations and forged documents discovered only during disputes',
+    'Reactive Regulation: Market bubbles and subsidy fraud detected only after significant damage occurs',
+  ]);
+
+  createTableSlide(pptx, 'Current System vs. Proposed System',
+    ['Dimension', 'Current System', 'Proposed TerraBlock Solution'],
+    [
+      ['Registration Time', '30+ days', '3-5 days (target)'],
+      ['Data Integrity', 'Paper, alterable', 'Blockchain, immutable'],
+      ['Fraud Detection', 'Post-incident', 'Real-time AI/ML'],
+      ['Cross-Department', 'Manual coordination', 'Automated API integration'],
+      ['Market Monitoring', 'Quarterly reports', 'Real-time dashboards'],
+      ['Subsidy Verification', 'Self-declared', 'Cross-registry verified'],
+      ['Dispute Resolution', '8+ months average', 'Clear evidence chain, faster resolution'],
+      ['Citizen Experience', '4-6 office visits', 'Single portal access'],
+    ],
+    'Side-by-side comparison of current vs proposed capabilities'
+  );
+
+  // SECTION 3: IMPACT OF THE PROBLEM
+  createSectionDivider(pptx, 'What Is the Impact of the Problem?', '03');
+
+  createBulletSlide(pptx, 'Economic & Social Impact', [
+    '€2B+ in foreign investment deterred annually due to title uncertainty and slow registration',
+    'Property disputes cost the judicial system €45M+ annually in court time and legal aid',
+    '34% of Serbian households cannot afford housing — undetected bubbles worsen affordability',
+    'Banks face higher risk premiums (0.5-1.0% on mortgage rates) due to title chain uncertainty',
+    'Small municipalities lose development projects because investors cannot verify land ownership in time',
+    'EU accession progress stalled: acquis Chapter 23 (Judiciary) requires transparent property rights',
+  ]);
+
+  createKPISlide(pptx, 'Quantified Annual Impact', [
+    { name: 'Deterred Foreign Investment', value: '€2B+', description: 'Real estate investment diverted to Croatia, Romania, and Montenegro — countries with clearer title systems.' },
+    { name: 'Judicial System Cost', value: '€45M/year', description: 'Property dispute litigation costs including court time, public defenders, expert witnesses, and appeal processes.' },
+    { name: 'Subsidy Leakage', value: '€10-15M/year', description: 'Housing subsidies reaching ineligible recipients or being diverted due to lack of cross-verification.' },
+    { name: 'Citizen Time Cost', value: '12M hours/year', description: 'Estimated productive hours lost by citizens navigating manual property registration processes.' },
+  ]);
+
+  // SECTION 4: PROPOSED SOLUTION
+  createSectionDivider(pptx, 'What Is the Solution We Propose?', '04');
+
+  createBulletSlide(pptx, 'TerraBlock: National Digital Land Registry', [
+    'Blockchain-Based Registry: Immutable, cryptographically verified ownership records for all 2.45M parcels',
+    'Smart Contracts: Automated transfer validation, compliance checks, and escrow settlement',
+    'AI/ML Engine: Real-time fraud detection, affordability forecasting, and bubble early warning',
+    'Ministerial Dashboards: 4-pillar policy monitoring (Affordability, Legal, Subsidy, Bubble) for evidence-based governance',
+    'API Integration: Secure connections to banks (23), courts (12 districts), municipalities (174), and tax authority',
+    'Citizen Portal: Single digital interface for ownership verification, transfer initiation, and document access',
+  ]);
+
+  createBulletSlide(pptx, 'Technology Architecture', [
+    'Permissioned Blockchain: Hyperledger Fabric — enterprise-grade, EU-compliant, energy-efficient',
+    'Data Layer: PostgreSQL for analytics + IPFS for document storage with SHA-256 verification',
+    'AI Models: Random Forest + LSTM for bubble prediction, trained on 10-year data (1.2M transactions)',
+    'API Gateway: RESTful + GraphQL with OAuth 2.0, handling 10,000+ concurrent requests',
+    'Dashboard: React-based ministerial control panels with real-time data refresh (every 15 minutes)',
+    'Security: End-to-end encryption, 3-of-3 multisig for transfers, 5-of-7 validator consensus',
+  ]);
+
+  // SECTION 5: WHY IS THIS SOLUTION UNIQUE?
+  createSectionDivider(pptx, 'How Is the Solution Relevant & Unique?', '05');
+
+  createBulletSlide(pptx, 'What Makes TerraBlock Different', [
+    'Policy-First Design: Built for ministerial decision-making, not just record-keeping — "policy → data → risk → action" workflow',
+    'Blockchain as Legal Infrastructure: Not just a database — every transaction is legally defensible and court-admissible',
+    'AI-Powered Governance: Predictive analytics for housing affordability, bubble detection, and subsidy fraud — not reactive reporting',
+    'Cross-Registry Integration: First system to link cadastre + courts + banks + tax + municipalities in one blockchain',
+    'Serbian Law Alignment: Smart contracts encode Serbian property law (inheritance, co-ownership, encumbrances, foreign restrictions)',
+    'EU Standards Ready: Aligned with INSPIRE Directive, acquis Chapter 23, and eIDAS for cross-border recognition',
+  ]);
+
+  createTableSlide(pptx, 'Competitive Landscape',
+    ['Feature', 'TerraBlock', 'Sweden (Lantmäteriet)', 'Georgia (Bitfury)', 'Dubai Land Dept.'],
+    [
+      ['Blockchain Type', 'Permissioned (HLF)', 'Pilot only', 'Public (Bitcoin)', 'Private (IBM)'],
+      ['Policy Dashboards', '4-pillar ministerial', 'None', 'None', 'Basic analytics'],
+      ['AI/ML Forecasting', 'Yes (bubble, fraud)', 'No', 'No', 'Limited'],
+      ['Subsidy Integration', 'Full cross-verify', 'No', 'No', 'No'],
+      ['Smart Contracts', 'Full lifecycle', 'Proof of concept', 'Timestamping only', 'Transfer only'],
+      ['EU Compliance', 'INSPIRE + eIDAS', 'Yes', 'No', 'No'],
+    ],
+    'TerraBlock is the most comprehensive blockchain land registry solution globally'
+  );
+
+  // SECTION 6: IMPLEMENTATION STEPS
+  createSectionDivider(pptx, 'Implementation Steps', '06');
+
+  createBulletSlide(pptx, 'Step 1: Data Capture & Digitization', [
+    'Objective: Digitize and standardize all existing land records across 174 municipalities',
+    'Timeline: Months 1-6 | Budget: €2.5M | Team: 45 data entry specialists + 8 GIS experts',
+    'Activities: Scan paper records, OCR processing, geocoding parcels, satellite footprint mapping',
+    'Dependencies: Access agreements with municipal cadastre offices (may not exist for all municipalities)',
+    'Risk: Incomplete historical records in rural areas — estimated 15% of parcels have gaps',
+    'Deliverable: Standardized digital record for each of 2,450,000 registered parcels',
+  ], 'Foundation phase — all subsequent steps depend on data quality');
+
+  createBulletSlide(pptx, 'Step 2: Cross-Department Coordination', [
+    'Objective: Establish API connections and data-sharing agreements across all government entities',
+    'Timeline: Months 3-9 | Budget: €1.8M | Team: 6 integration engineers + 3 legal advisors',
+    'Stakeholders: Cadastre (RGZ), Courts (12 districts), Banks (23), Tax Authority, 174 Municipalities',
+    'Challenge: Data formats differ across departments — requires ETL pipelines and schema mapping',
+    'Legal Framework: MoUs needed with each entity, data protection impact assessments (GDPR-aligned)',
+    'Deliverable: Live API feeds from all major data sources into unified blockchain layer',
+  ], 'Coordination is the hardest part — requires political will and institutional buy-in');
+
+  createBulletSlide(pptx, 'Step 3: Blockchain Infrastructure Deployment', [
+    'Objective: Deploy permissioned blockchain network with smart contracts and validator nodes',
+    'Timeline: Months 6-12 | Budget: €3.2M | Team: 12 blockchain engineers + 4 security specialists',
+    'Architecture: 7 validator nodes (Ministry, RGZ, NBS, 2 courts, 2 regional centers)',
+    'Smart Contracts: PropertyRegistry, TransferManager, EncumbranceRegistry, DisputeHandler, SubsidyValidator',
+    'Testing: 3-month parallel run with legacy system before cutover',
+    'Deliverable: Production blockchain network processing live transactions',
+  ]);
+
+  createBulletSlide(pptx, 'Step 4: AI/ML Model Training & Validation', [
+    'Objective: Train and validate predictive models for fraud detection, affordability, and bubble risk',
+    'Timeline: Months 9-15 | Budget: €1.5M | Team: 6 data scientists + 2 domain experts',
+    'Data: 10-year historical data (1.2M transactions) + 15-year EU comparative data (22 countries)',
+    'Models: Random Forest for classification, LSTM for time-series forecasting, Anomaly detection for fraud',
+    'Validation: Backtesting against known events (2008 crisis, COVID-19 impact, Belgrade 2021 spike)',
+    'Deliverable: Production AI models with >85% accuracy integrated into dashboard suite',
+  ]);
+
+  createBulletSlide(pptx, 'Step 5: Dashboard & Portal Deployment', [
+    'Objective: Launch ministerial dashboards and citizen portal for all stakeholders',
+    'Timeline: Months 12-18 | Budget: €2.0M | Team: 8 frontend + 4 UX designers + 3 policy advisors',
+    'Ministerial: 4-pillar command center (Affordability, Legal, Subsidy, Bubble) with drill-down',
+    'Citizen Portal: Property lookup, transfer initiation, document access, mobile-responsive',
+    'Government Portal: Data input, report generation, policy simulation tools',
+    'Deliverable: Live dashboards accessible to all stakeholder tiers with role-based access',
+  ]);
+
+  createBulletSlide(pptx, 'Step 6: National Rollout & Training', [
+    'Objective: Roll out system nationally with comprehensive training for all user groups',
+    'Timeline: Months 15-24 | Budget: €1.5M | Team: 12 trainers + 6 regional coordinators',
+    'Phase A (Months 15-18): Belgrade + Novi Sad + Niš (covering 60% of transactions)',
+    'Phase B (Months 18-21): Remaining Tier 1 cities (Kragujevac, Subotica, Pančevo, Zrenjanin)',
+    'Phase C (Months 21-24): All municipalities — mobile teams for rural areas',
+    'Deliverable: Full national deployment with trained operators in every municipality',
+  ]);
+
+  // Summary timeline
+  createTableSlide(pptx, 'Implementation Timeline Summary',
+    ['Step', 'Activity', 'Timeline', 'Budget', 'Key Dependency'],
+    [
+      ['1', 'Data Capture & Digitization', 'Months 1-6', '€2.5M', 'Municipal access agreements'],
+      ['2', 'Cross-Department Coordination', 'Months 3-9', '€1.8M', 'Political will, MoUs'],
+      ['3', 'Blockchain Deployment', 'Months 6-12', '€3.2M', 'Infrastructure, validators'],
+      ['4', 'AI/ML Model Training', 'Months 9-15', '€1.5M', 'Historical data quality'],
+      ['5', 'Dashboard & Portal', 'Months 12-18', '€2.0M', 'Stakeholder requirements'],
+      ['6', 'National Rollout', 'Months 15-24', '€1.5M', 'Training logistics'],
+    ],
+    'Total Budget: €12.5M over 24 months | Total Team: ~120 specialists'
+  );
+
+  await pptx.writeFile({ fileName: 'Problem_Solution_Implementation.pptx' });
+};
+
 // ==================== EXECUTIVE OVERVIEW PPT ====================
 
 export const generateExecutiveOverviewPPT = async () => {
