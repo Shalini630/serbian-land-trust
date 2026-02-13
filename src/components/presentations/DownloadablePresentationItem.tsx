@@ -10,6 +10,7 @@ import {
   generateExecutiveOverviewPPT,
   generateDataArchitecturePPT,
   generateSmartContractPPT,
+  generateProblemSolutionPPT,
 } from '@/utils/pptGenerator';
 
 interface DownloadablePresentationItemProps {
@@ -28,6 +29,7 @@ const PRESENTATION_GENERATORS: Record<string, () => Promise<void>> = {
   'bubble-protection': generateBubbleProtectionPPT,
   'data-architecture': generateDataArchitecturePPT,
   'smart-contract': generateSmartContractPPT,
+  'problem-solution': generateProblemSolutionPPT,
 };
 
 export const DownloadablePresentationItem: React.FC<DownloadablePresentationItemProps> = ({

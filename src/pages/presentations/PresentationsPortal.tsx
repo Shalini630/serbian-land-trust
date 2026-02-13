@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { ShieldIcon } from '@/components/icons/ShieldIcon';
 import { DownloadablePresentationItem } from '@/components/presentations/DownloadablePresentationItem';
 import { DashboardPPTDownloadButton } from '@/components/presentations/DashboardPPTDownloadButton';
+import DataReferenceTab from '@/pages/presentations/DataReferenceTab';
 import { 
   ArrowLeft, 
   LogOut, 
@@ -23,6 +24,7 @@ import {
   Wallet,
   TrendingUp,
   Activity,
+  TableProperties,
 } from 'lucide-react';
  
 interface PresentationPhase {
@@ -46,6 +48,7 @@ const presentations: PresentationPhase[] = [
     items: [
       { type: 'presentation', title: 'Vision & Mission', description: 'Strategic overview of blockchain land registry', presentationKey: 'vision-mission' },
       { type: 'presentation', title: 'Problem Statement', description: 'Current challenges in Serbian land registry', presentationKey: 'problem-statement' },
+      { type: 'presentation', title: 'Problem → Solution → Implementation', description: 'Complete 6-step strategic narrative: Problem, Current State, Impact, Solution, Uniqueness, Implementation', presentationKey: 'problem-solution' },
       { type: 'document', title: 'Executive Summary', description: 'One-page project brief for stakeholders' },
     ],
   },
@@ -97,14 +100,15 @@ const presentations: PresentationPhase[] = [
    }
  };
  
- export const PresentationsPortal: React.FC = () => {
-   const { user, role, logout } = useAuth();
-   const navigate = useNavigate();
- 
-   const handleLogout = () => {
-     logout();
-     navigate('/');
-   };
+  export const PresentationsPortal: React.FC = () => {
+    const { user, role, logout } = useAuth();
+    const navigate = useNavigate();
+    const [activeView, setActiveView] = useState<'presentations' | 'data'>('presentations');
+
+    const handleLogout = () => {
+      logout();
+      navigate('/');
+    };
  
    const canAccessPhase = (phase: PresentationPhase) => {
      if (!role) return false;
@@ -162,16 +166,44 @@ const presentations: PresentationPhase[] = [
        </header>
  
        {/* Main Content */}
-       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-         {/* Welcome Section */}
-         <div className="mb-8 sm:mb-12">
-           <h1 className="font-display text-2xl sm:text-3xl font-bold text-primary-foreground mb-2">
-             Welcome, {user.name}
-           </h1>
-           <p className="text-primary-foreground/60 font-body">
-             Access presentations and materials for the National Digital Land Registry project.
-           </p>
-         </div>
+        <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+          {/* Welcome Section */}
+          <div className="mb-8 sm:mb-12 flex items-end justify-between">
+            <div>
+              <h1 className="font-display text-2xl sm:text-3xl font-bold text-primary-foreground mb-2">
+                Welcome, {user.name}
+              </h1>
+              <p className="text-primary-foreground/60 font-body">
+                Access presentations and materials for the National Digital Land Registry project.
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant={activeView === 'presentations' ? 'hero' : 'heroOutline'}
+                size="sm"
+                onClick={() => setActiveView('presentations')}
+                className="gap-2"
+              >
+                <Presentation className="w-4 h-4" />
+                Presentations
+              </Button>
+              <Button
+                variant={activeView === 'data' ? 'hero' : 'heroOutline'}
+                size="sm"
+                onClick={() => setActiveView('data')}
+                className="gap-2"
+              >
+                <TableProperties className="w-4 h-4" />
+                Data Reference
+              </Button>
+            </div>
+          </div>
+
+          {activeView === 'data' ? (
+            <DataReferenceTab />
+          ) : (
+          <>
+
  
          {/* Phases Grid */}
          <div className="space-y-6">
@@ -324,9 +356,11 @@ const presentations: PresentationPhase[] = [
               </Link>
             </div>
           </div>
-       </main>
-     </div>
-   );
+          </>
+          )}
+        </main>
+      </div>
+    );
  };
  
  export default PresentationsPortal;
